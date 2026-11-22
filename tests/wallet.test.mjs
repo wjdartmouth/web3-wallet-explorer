@@ -1,0 +1,10 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { shortenAddress, explorerAddressUrl } from "../src/lib/wallet.mjs";
+const address = "0x1234567890123456789012345678901234567890";
+test("shortens a valid address", () => assert.equal(shortenAddress(address), "0x1234…7890"));
+test("rejects invalid address", () => assert.equal(shortenAddress("hello"), "Invalid address"));
+test("links Base Sepolia explorer", () => assert.equal(explorerAddressUrl(84532,address), `https://sepolia.basescan.org/address/${address}`));
+test("links Ethereum explorer", () => assert.equal(explorerAddressUrl(1,address), `https://etherscan.io/address/${address}`));
+test("rejects unsupported chains", () => assert.throws(() => explorerAddressUrl(137,address), /Unsupported network/));
+test("rejects malformed explorer address", () => assert.throws(() => explorerAddressUrl(1,"bad"), /Invalid EVM address/));
