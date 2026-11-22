@@ -1,0 +1,2 @@
+export function shortenAddress(address) { if (!/^0x[a-fA-F0-9]{40}$/.test(address)) return "Invalid address"; return `${address.slice(0, 6)}…${address.slice(-4)}`; }
+export function explorerAddressUrl(chainId, address) { if (!/^0x[a-fA-F0-9]{40}$/.test(address)) throw new Error("Invalid EVM address"); const base = { 1: "https://etherscan.io", 84532: "https://sepolia.basescan.org" }[chainId]; if (!base) throw new Error("Unsupported network"); return `${base}/address/${address}`; }
